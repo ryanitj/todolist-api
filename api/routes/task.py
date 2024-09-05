@@ -8,12 +8,20 @@ task_controller = TaskController()
 task_blueprint = Blueprint("task", __name__, url_prefix="/api")
 
 @task_blueprint.route("/tasks", methods=["GET"])
-@task_blueprint.arguments(TaskSchema)
 @auth_route
 @task_blueprint.doc(
     summary="Get all tasks",
     description="Returns an array of all tasks.",
     tags=['task'],
+    parameters=[
+        {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': 'API KEY',
+            'required': True,
+        }
+    ],
     responses={
         200: {
             "description": "Tasks retrieved successfully",
@@ -26,7 +34,7 @@ task_blueprint = Blueprint("task", __name__, url_prefix="/api")
         },
     }
 )
-def getAllTasks(item_data):
+def getAllTasks():
     return task_controller.getAllTasks()
 
 @task_blueprint.route("/tasks", methods=["POST"])
@@ -44,13 +52,20 @@ def getAllTasks(item_data):
             'required': True,
             'type': "string"
         },
-         {
+        {
             'in': 'body',
             'name': 'description',
             'description': 'Description of the task',
             'required': False,
             'type': "string"
         },
+        {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': 'API KEY',
+            'required': True,
+        }
     ],
     responses={
         200: {
@@ -86,6 +101,13 @@ def createTask(task_data):
             'schema': {
                 'type': 'string',
             }
+        },
+        {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': 'API KEY',
+            'required': True,
         }
     ],
     responses={
@@ -97,8 +119,8 @@ def createTask(task_data):
                 }
             }
         },
-        400: {
-            "description": "Bad request - Invalid input data"
+        204: {
+            "description": "No content - None task found"
         },
         500: {
             "description": "Internal server error"
@@ -127,13 +149,20 @@ def getTask(id):
                 'type': 'string',
             }
         },
+        {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': 'API KEY',
+            'required': True,
+        }
     ],
     responses={
         200: {
             "description": "Task deleted successfully",
         },
-        400: {
-            "description": "Bad request - Invalid input data"
+        204: {
+            "description": "No content - None task found"
         },
         500: {
             "description": "Internal server error"
@@ -153,6 +182,7 @@ def deleteTask(id):
     summary="Updated a task",
     description="Updated a single task",
     tags=['task'],
+    
     parameters=[
         {
             'in': 'query',
@@ -177,14 +207,21 @@ def deleteTask(id):
             'required': False,
             'type': "string"
         },
+        {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': 'API KEY',
+            'required': True,
+        }
         
     ],
     responses={
         200: {
             "description": "Task updated successfully",
         },
-        400: {
-            "description": "Bad request - Invalid input data"
+        204: {
+            "description": "No content - None task found"
         },
         500: {
             "description": "Internal server error"

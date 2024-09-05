@@ -30,7 +30,15 @@ class TaskController():
         
     def updateTask(self, id, data):
         try:
-            task_service.updateTask(taskId=id, updatedData=data)
+            result = task_service.updateTask(taskId=id, updatedData=data)
+            
+            if(result is None):
+                return response(
+                    success=True,
+                    data=[],
+                    message="Task not found.",
+                    statusCode=204
+                )
             
             return response(
                 success=True,
@@ -55,7 +63,15 @@ class TaskController():
                       
     def deleteTask(self, id):
         try:
-            task_service.deleteTask(taskId=id)
+            result = task_service.deleteTask(taskId=id)
+            
+            if(result is None):
+                return response(
+                    success=True,
+                    data=[],
+                    message="Task not found.",
+                    statusCode=204
+                )
             
             return response(
                 success=True,
@@ -81,7 +97,7 @@ class TaskController():
     def getAllTasks(self):
         try:
             tasks = task_service.getAllTasks()
-
+           
             return response(
                 success=True,
                 data=tasks,
@@ -99,6 +115,14 @@ class TaskController():
     def getTask(self, id):
         try:
             task = task_service.getTask(taskId=id)
+            
+            if(task is None):
+                return response(
+                    success=True,
+                    data=[],
+                    message="Tasks not found.",
+                    statusCode=204
+                )
             
             return response(
                 success=True,

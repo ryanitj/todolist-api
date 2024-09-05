@@ -7,42 +7,57 @@ class TaskDBException(Exception):
 
 class TaskService():
     def createTask(self, task:Task):
-        taskDB = TaskDB(name=task.name, description=task.description)
-        db.session.add(taskDB)
-        db.session.commit()
+        try:
+            taskDB = TaskDB(name=task.name, description=task.description)
+            db.session.add(taskDB)
+            db.session.commit()
 
+            return taskDB.id
+        except TaskDBException as e:
+            raise TaskDBException(str(e))
+        
     def updateTask(self, taskId, updatedData):
-        taskDB = TaskDB.query.get(taskId)
+        try:
+            taskDB = TaskDB.query.get(taskId)
         
-        if(taskDB is None):
-            raise TaskDBException("Task not found")
-        
-        taskDB.name = updatedData.get("name", taskDB.name)
-        taskDB.description = updatedData.get("description", taskDB.description)
+            if(taskDB is None):
+                return None
+            
+            taskDB.name = updatedData.get("name", taskDB.name)
+            taskDB.description = updatedData.get("description", taskDB.description)
 
-        db.session.commit()
-        
+            db.session.commit()
+            
+            return True
+        except TaskDBException as e:
+            raise TaskDBException(str(e))
+       
     def deleteTask(self, taskId):
-        taskDB = TaskDB.query.get(taskId)
+        try:
+            taskDB = TaskDB.query.get(taskId)
 
-        if(taskDB is None):
-            raise TaskDBException("Task not found")
-        
-        db.session.delete(taskDB)
-        db.session.commit()
+            if(taskDB is None):
+                return None
+            
+            db.session.delete(taskDB)
+            db.session.commit()
+            
+            return True
+        except TaskDBException as e:
+            raise TaskDBException(str(e))
         
     def getAllTasks(self):
         try:
             return Serializer.serialize_list(TaskDB.query.all()) 
-        except Exception as e:
-            raise str(e)
+        except TaskDBException as e:
+            raise TaskDBException(str(e))
     
     def getTask(self, taskId):
         try:
             taskDB = TaskDB.query.get(taskId)
 
             if(taskDB is None):
-                raise TaskDBException("Task not found")
+                return None
 
             return taskDB.serialize()
         except TaskDBException as e:
