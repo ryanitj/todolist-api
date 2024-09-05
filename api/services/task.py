@@ -8,7 +8,7 @@ class TaskDBException(Exception):
 class TaskService():
     def createTask(self, task:Task):
         try:
-            taskDB = TaskDB(name=task.name, description=task.description)
+            taskDB = TaskDB(name=task.name, description=task.description, done=task.done)
             db.session.add(taskDB)
             db.session.commit()
 
@@ -25,6 +25,7 @@ class TaskService():
             
             taskDB.name = updatedData.get("name", taskDB.name)
             taskDB.description = updatedData.get("description", taskDB.description)
+            taskDB.done = updatedData.get("done", taskDB.done)
 
             db.session.commit()
             

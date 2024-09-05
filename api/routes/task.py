@@ -84,6 +84,7 @@ def getAllTasks():
 )
 def createTask(task_data):
     data = task_data
+    
     return task_controller.createTask(data)
 
 @task_blueprint.route("/tasks/<int:id>", methods=["GET"])

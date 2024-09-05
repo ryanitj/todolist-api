@@ -9,7 +9,7 @@ task_service = TaskService()
 class TaskController():
     def createTask(self, data):
         try:
-            task = Task(name=data["name"], description=data["description"])
+            task = Task(name=data["name"], description=data["description"], done=data["done"])
             
             task_service.createTask(task)
             
