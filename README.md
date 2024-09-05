@@ -1,61 +1,76 @@
-Project Title: Todo List API
+# Todo List API
+
 A RESTful API for managing a to-do list.
 
-Technologies Used
-Python
-Flask
-Flask Migrate
-Flask SQLAlchemy
-Flask-SMOREST
-Marshmallow
-Pydantic
-Alembic
-Swagger
-PostgreSQL
-Installation
-Clone the repository:
-Bash
-git clone <repository_url>
-Use code with caution.
+## Description
 
-Create a virtual environment:
-python -m venv venv
+This Python application provides a RESTful API for managing a to-do list. It allows users to create, read, update, and delete (CRUD) tasks.
 
-3. **Activate the virtual environment:**
+## Getting Started
 
-```bash
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install dependencies:
-Bash
+### Dependencies
+
+- Python 3.x
+- Flask
+- Flask Migrate
+- Flask SQLAlchemy
+- Flask-SMOREST
+- Marshmallow
+- Pydantic
+- Alembic
+- Swagger
+- PostgreSQL
+
+### Installing
+
+- Clone the repository:
+
+```
+git clone https://github.com/ryanitj/todolist-api
+```
+
+- Create a virtual environment:
+
+```
+.venv\Scripts\activate # On MAC: source venv/bin/activate
+```
+
+- Install dependencies:
+
+```
 pip install -r requirements.txt
-Use code with caution.
+```
 
- 
-Configuration
-Create a .env file in the project root directory and add your environment variables:
+- Configuration:
+  Create a .env file in the project root directory and add your environment variables, follow an example below:
 
+```
 DB_PORT=5432
 DB_URL=postgresql://postgres:postgres@localhost
 DB_NAME=postgres
-Replace the placeholder values with your actual database credentials.
 
-Running the Application
-Create the database:
-Bash
+API_KEY=<YOUR_API_KEY>
+```
+
+### Executing program
+
+- Create the database:
+
+```
 flask db init
 flask db migrate
 flask db upgrade
-Use code with caution.
-
-Run the application:
-Bash
-flask run
-Use code with caution.
-
-API Documentation
-The API documentation is available at:
-
-http://localhost:5000/api/swagger-ui
-Usage
-[API endpoints and usage instructions]
 ```
+
+- Run the application:
+
+```
+flask run
+```
+
+## Authors
+
+Contributors names and contact info
+
+Ryan Coelho  
+[Linkedin](https://www.linkedin.com/in/ryan-coelho-217b11200/)

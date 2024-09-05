@@ -31,6 +31,7 @@ def getAllTasks(item_data):
 
 @task_blueprint.route("/tasks", methods=["POST"])
 @task_blueprint.arguments(TaskSchemaStore)
+@auth_route
 @task_blueprint.doc(
     summary="Create a task",
     description="Create a new task with the provided details",
@@ -71,6 +72,7 @@ def createTask(task_data):
     return task_controller.createTask(data)
 
 @task_blueprint.route("/tasks/<int:id>", methods=["GET"])
+@auth_route
 @task_blueprint.doc(
     summary="Get a single task",
     description="Return a single task",
@@ -110,6 +112,7 @@ def getTask(id):
     return task_controller.getTask(id)
 
 @task_blueprint.route("/tasks/<int:id>", methods=["DELETE"])
+@auth_route
 @task_blueprint.doc(
     summary="Delete a task",
     description="Delete a single task",
@@ -145,6 +148,7 @@ def deleteTask(id):
 
 @task_blueprint.route("/tasks/<int:id>", methods=["PUT"])
 @task_blueprint.arguments(TaskSchemaUpdate)
+@auth_route
 @task_blueprint.doc(
     summary="Updated a task",
     description="Updated a single task",
